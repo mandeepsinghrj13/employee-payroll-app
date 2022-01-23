@@ -1,14 +1,22 @@
 import User from '../models/user.model';
+import bcrypt from 'bcrypt';
+
+//create new user
+export const register = async (info) => {
+  const findemail = await User.find({ email: info.email });
+  if (findemail.length === 0) {
+    const hashing = await bcrypt.hash(info.password, 10);
+    info.password = hashing;
+    const data = await User.create(info);
+    return data;
+  } else {
+    return null;
+  }
+};
 
 //get all users
 export const getAllUsers = async () => {
   const data = await User.find();
-  return data;
-};
-
-//create new user
-export const newUser = async (body) => {
-  const data = await User.create(body);
   return data;
 };
 

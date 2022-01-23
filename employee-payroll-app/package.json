@@ -7,7 +7,7 @@
     "dev": "nodemon --exec babel-node src/index.js",
     "build": "rimraf build && babel src --out-dir build",
     "prestart": "rimraf build && babel src --out-dir build",
-    "start": "node build/index.js",
+    "start": "nodemon build/index.js",
     "test": "cross-env NODE_ENV=test mocha --exit --recursive --require @babel/register --timeout=5000 tests/**/*.js",
     "test:coverage": "cross-env NODE_ENV=test nyc --require @babel/register --reporter lcov --reporter text mocha --exit --recursive --timeout=5000 tests/**/*.js",
     "lint": "eslint . --ext .js",
@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

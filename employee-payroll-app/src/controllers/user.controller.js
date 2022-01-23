@@ -2,6 +2,38 @@ import HttpStatus from 'http-status-codes';
 import * as UserService from '../services/user.service';
 
 /**
+ * Controller to create a new user
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const register = async (req, res, next) => {
+  try {
+    const info = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password
+    };
+    const data = await UserService.register(info);
+    if (data) {
+      res.status(HttpStatus.CREATED).json({
+        code: HttpStatus.CREATED, //201 Created
+        data: data,
+        message: 'User created successfully'
+      });
+    } else {
+      res.status(HttpStatus.CONFLICT).json({
+        code: HttpStatus.CONFLICT, //409 Conflict
+        message: 'Email Already Exist'
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Controller to get all users available
  * @param  {object} req - request object
  * @param {object} res - response object
@@ -33,25 +65,6 @@ export const getUser = async (req, res, next) => {
       code: HttpStatus.OK,
       data: data,
       message: 'User fetched successfully'
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-/**
- * Controller to create a new user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-export const newUser = async (req, res, next) => {
-  try {
-    const data = await UserService.newUser(req.body);
-    res.status(HttpStatus.CREATED).json({
-      code: HttpStatus.CREATED,
-      data: data,
-      message: 'User created successfully'
     });
   } catch (error) {
     next(error);
