@@ -33,6 +33,35 @@ export const register = async (req, res, next) => {
   }
 };
 
+export const login = async (req, res, next) => {
+  try {
+    const info = {
+      email: req.body.email,
+      password: req.body.password
+    };
+    const data = await UserService.login(info);
+    if (data === 'not register') {
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'not register'
+      });
+    } else if (data === 'wrong password') {
+      res.status(HttpStatus.UNAUTHORIZED).json({
+        code: HttpStatus.UNAUTHORIZED,
+        message: 'wrong password'
+      });
+    } else {
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'login successfully',
+        token: data
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 /**
  * Controller to get all users available
  * @param  {object} req - request object

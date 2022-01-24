@@ -1,6 +1,6 @@
 import User from '../models/user.model';
 import bcrypt from 'bcrypt';
-
+import jwt from 'jsonwebtoken';
 //create new user
 export const register = async (info) => {
   const findemail = await User.find({ email: info.email });
@@ -11,6 +11,29 @@ export const register = async (info) => {
     return data;
   } else {
     return null;
+  }
+};
+
+//Login Api
+export const login = async (info) => {
+  const findemail = await User.findOne({ email: info.email });
+  if (findemail) {
+    const match = await bcrypt.compare(info.password, findemail.password);
+    if (match) {
+      const token = jwt.sign(
+        {
+          email: findemail.email,
+          id: findemail._id,
+          role: findemail.role
+        },
+        process.env.JWT_SECRET
+      );
+      return token;
+    } else {
+      return 'wrong password';
+    }
+  } else {
+    return 'not register';
   }
 };
 
