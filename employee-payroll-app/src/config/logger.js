@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import winston, { format } from 'winston';
 import 'winston-daily-rotate-file';
 

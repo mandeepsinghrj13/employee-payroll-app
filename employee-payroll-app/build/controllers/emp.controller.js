@@ -7,37 +7,48 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.newEmployee = void 0;
 
-var _express = _interopRequireDefault(require("express"));
+var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
-var userController = _interopRequireWildcard(require("../controllers/user.controller"));
+var UserService = _interopRequireWildcard(require("../services/emp.service"));
 
-var empController = _interopRequireWildcard(require("../controllers/emp.controller"));
-
-var _user2 = require("../validators/user.validator");
-
-var _auth = require("../middlewares/auth.middleware");
+var _logger = _interopRequireDefault(require("../config/logger"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-/* eslint-disable prettier/prettier */
-var router = _express["default"].Router(); //route to create a new user
+/**
+ * Controller to create a newEmployee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+var newEmployee = function newEmployee(req, res, next) {
+  try {
+    UserService.newEmployee(req.body, function (error, data) {
+      if (data) {
+        _logger["default"].info('Employee Added successfully');
 
+        res.status(_httpStatusCodes["default"].CREATED).json({
+          code: _httpStatusCodes["default"].CREATED,
+          data: data,
+          message: 'Employee Added successfully'
+        });
+      } else {
+        _logger["default"].error('Employee Email Already Exist');
 
-router.post('/register', _user2.registerValidator, userController.register); //route to create a new user
+        res.status(_httpStatusCodes["default"].CONFLICT).json({
+          code: _httpStatusCodes["default"].CONFLICT,
+          data: data,
+          message: 'Employee Email Already Exist'
+        });
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-router.post('/login', _user2.loginValidator, userController.login);
-router.post('/employees', _auth.userAuth, _user2.newEmployeeValidator, empController.newEmployee); //route to get all users
-
-router.get('', userController.getAllUsers); //route to get a single user by their user id
-
-router.get('/:_id', _auth.userAuth, userController.getUser); //route to update a single user by their user id
-
-router.put('/:_id', userController.updateUser); //route to delete a single user by their user id
-
-router["delete"]('/:_id', userController.deleteUser);
-var _default = router;
-exports["default"] = _default;
+exports.newEmployee = newEmployee;

@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
 import express from 'express';
 import * as userController from '../controllers/user.controller';
+import * as empController from '../controllers/emp.controller';
 import {
   registerValidator,
-  loginValidator
+  loginValidator,
+  newEmployeeValidator
 } from '../validators/user.validator';
 import { userAuth } from '../middlewares/auth.middleware';
 
@@ -14,6 +16,13 @@ router.post('/register', registerValidator, userController.register);
 
 //route to create a new user
 router.post('/login', loginValidator, userController.login);
+
+router.post(
+  '/employees',
+  userAuth,
+  newEmployeeValidator,
+  empController.newEmployee
+);
 
 //route to get all users
 router.get('', userController.getAllUsers);

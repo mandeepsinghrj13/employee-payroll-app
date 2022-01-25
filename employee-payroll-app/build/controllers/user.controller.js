@@ -17,6 +17,8 @@ var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
 var UserService = _interopRequireWildcard(require("../services/user.service"));
 
+var _logger = _interopRequireDefault(require("../config/logger"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -48,6 +50,8 @@ var register = /*#__PURE__*/function () {
             data = _context.sent;
 
             if (data) {
+              _logger["default"].info('User created successfully');
+
               res.status(_httpStatusCodes["default"].CREATED).json({
                 code: _httpStatusCodes["default"].CREATED,
                 //201 Created
@@ -55,6 +59,8 @@ var register = /*#__PURE__*/function () {
                 message: 'User created successfully'
               });
             } else {
+              _logger["default"].error('Email Already Exist');
+
               res.status(_httpStatusCodes["default"].CONFLICT).json({
                 code: _httpStatusCodes["default"].CONFLICT,
                 //409 Conflict
@@ -104,16 +110,22 @@ var login = /*#__PURE__*/function () {
             data = _context2.sent;
 
             if (data === 'not register') {
+              _logger["default"].error('not register');
+
               res.status(_httpStatusCodes["default"].NOT_FOUND).json({
                 code: _httpStatusCodes["default"].NOT_FOUND,
                 message: 'not register'
               });
             } else if (data === 'wrong password') {
+              _logger["default"].error('wrong password');
+
               res.status(_httpStatusCodes["default"].UNAUTHORIZED).json({
                 code: _httpStatusCodes["default"].UNAUTHORIZED,
                 message: 'wrong password'
               });
             } else {
+              _logger["default"].info('login successfully');
+
               res.status(_httpStatusCodes["default"].OK).json({
                 code: _httpStatusCodes["default"].OK,
                 message: 'login successfully',
