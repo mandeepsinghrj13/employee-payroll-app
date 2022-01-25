@@ -1,7 +1,6 @@
 import HttpStatus from 'http-status-codes';
 import * as UserService from '../services/emp.service';
 import logger from '../config/logger';
-import { reject } from 'bcrypt/promises';
 
 /**
  * Controller to create a newEmployee
@@ -109,6 +108,33 @@ export const updateEmployee = (req, res, next) => {
           message: ' Id Not Found'
         });
       });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Controller to delete a Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const deleteEmployee = async (req, res, next) => {
+  try {
+    const data = await UserService.deleteEmployee(req.params._id);
+    if (data == null) {
+      logger.error(' Id Not Found');
+      return res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: ' Id Not Found'
+      });
+    }
+    logger.info('Employee deleted successfully');
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      message: 'Employee deleted successfully',
+      data: data
+    });
   } catch (error) {
     next(error);
   }

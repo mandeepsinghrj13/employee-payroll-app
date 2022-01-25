@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import express from 'express';
 import * as userController from '../controllers/user.controller';
 import * as empController from '../controllers/emp.controller';
@@ -25,6 +24,6 @@ router.get('/employees/:_id', userAuth, empController.getEmployee);
 router.put('/employees/:_id', userAuth, newEmployeeValidator, empController.updateEmployee);
 
 //route to delete a single user by their user id
-router.delete('/:_id', userController.deleteUser);
+router.delete('/employees/:_id', userAuth, empController.deleteEmployee);
 
 export default router;

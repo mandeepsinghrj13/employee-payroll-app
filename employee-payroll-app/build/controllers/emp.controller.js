@@ -7,15 +7,17 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateEmployee = exports.newEmployee = exports.getEmployee = exports.allEmployee = void 0;
+exports.updateEmployee = exports.newEmployee = exports.getEmployee = exports.deleteEmployee = exports.allEmployee = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
 var UserService = _interopRequireWildcard(require("../services/emp.service"));
 
 var _logger = _interopRequireDefault(require("../config/logger"));
-
-var _promises = require("bcrypt/promises");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -143,5 +145,69 @@ var updateEmployee = function updateEmployee(req, res, next) {
     next(error);
   }
 };
+/**
+ * Controller to delete a Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
 
 exports.updateEmployee = updateEmployee;
+
+var deleteEmployee = /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return UserService.deleteEmployee(req.params._id);
+
+          case 3:
+            data = _context.sent;
+
+            if (!(data == null)) {
+              _context.next = 7;
+              break;
+            }
+
+            _logger["default"].error(' Id Not Found');
+
+            return _context.abrupt("return", res.status(_httpStatusCodes["default"].NOT_FOUND).json({
+              code: _httpStatusCodes["default"].NOT_FOUND,
+              message: ' Id Not Found'
+            }));
+
+          case 7:
+            _logger["default"].info('Employee deleted successfully');
+
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
+              message: 'Employee deleted successfully',
+              data: data
+            });
+            _context.next = 14;
+            break;
+
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](0);
+            next(_context.t0);
+
+          case 14:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 11]]);
+  }));
+
+  return function deleteEmployee(_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.deleteEmployee = deleteEmployee;

@@ -47,3 +47,12 @@ export const updateEmployee = (_id, body) => {
       .catch((error) => reject(error));
   });
 };
+
+//delete single user
+export const deleteEmployee = async (id) => {
+  try {
+    return await User.findByIdAndDelete(id);
+  } catch (error) {
+    return error;
+  }
+};

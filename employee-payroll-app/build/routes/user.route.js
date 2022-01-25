@@ -23,7 +23,6 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-/* eslint-disable prettier/prettier */
 var router = _express["default"].Router(); //route to create a new user
 
 
@@ -38,6 +37,6 @@ router.get('/employees/:_id', _auth.userAuth, empController.getEmployee); //rout
 
 router.put('/employees/:_id', _auth.userAuth, _user2.newEmployeeValidator, empController.updateEmployee); //route to delete a single user by their user id
 
-router["delete"]('/:_id', userController.deleteUser);
+router["delete"]('/employees/:_id', _auth.userAuth, empController.deleteEmployee);
 var _default = router;
 exports["default"] = _default;
