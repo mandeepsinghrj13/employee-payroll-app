@@ -1,6 +1,7 @@
 import User from '../models/user.model';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import * as utils from '../utils/user.util';
+
 //create new user
 export const register = async (info) => {
   const findemail = await User.find({ email: info.email });
@@ -20,14 +21,7 @@ export const login = async (info) => {
   if (findemail) {
     const match = await bcrypt.compare(info.password, findemail.password);
     if (match) {
-      const token = jwt.sign(
-        {
-          email: findemail.email,
-          id: findemail._id,
-          role: findemail.role
-        },
-        process.env.JWT_SECRET
-      );
+      const token = utils.token(findemail);
       return token;
     } else {
       return 'wrong password';
