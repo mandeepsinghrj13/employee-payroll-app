@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.newEmployee = void 0;
+exports.newEmployee = exports.allEmployee = void 0;
 
 var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
@@ -50,5 +50,30 @@ var newEmployee = function newEmployee(req, res, next) {
     next(error);
   }
 };
+/**
+ * Controller to get all Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
 
 exports.newEmployee = newEmployee;
+
+var allEmployee = function allEmployee(req, res, next) {
+  try {
+    UserService.allEmployee(function (error, data) {
+      if (data) {
+        res.status(_httpStatusCodes["default"].OK).json({
+          code: _httpStatusCodes["default"].OK,
+          message: 'Geting All Employee Successfully',
+          data: data
+        });
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.allEmployee = allEmployee;

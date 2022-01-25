@@ -25,7 +25,7 @@ router.post(
 );
 
 //route to get all users
-router.get('', userController.getAllUsers);
+router.get('/employees', userAuth, empController.allEmployee);
 
 //route to get a single user by their user id
 router.get('/:_id', userAuth, userController.getUser);

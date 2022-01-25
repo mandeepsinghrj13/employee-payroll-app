@@ -10,3 +10,14 @@ export const newEmployee = (body, callback) => {
     }
   });
 };
+
+//get all Employee
+export const allEmployee = (callback) => {
+  User.find((error, data) => {
+    if (data) {
+      return callback(null, data);
+    } else {
+      return callback(error, null);
+    }
+  });
+};

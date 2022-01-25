@@ -31,3 +31,25 @@ export const newEmployee = (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to get all Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const allEmployee = (req, res, next) => {
+  try {
+    UserService.allEmployee((error, data) => {
+      if (data) {
+        res.status(HttpStatus.OK).json({
+          code: HttpStatus.OK,
+          message: 'Geting All Employee Successfully',
+          data: data
+        });
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};

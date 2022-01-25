@@ -32,7 +32,7 @@ router.post('/register', _user2.registerValidator, userController.register); //r
 router.post('/login', _user2.loginValidator, userController.login);
 router.post('/employees', _auth.userAuth, _user2.newEmployeeValidator, empController.newEmployee); //route to get all users
 
-router.get('', userController.getAllUsers); //route to get a single user by their user id
+router.get('/employees', _auth.userAuth, empController.allEmployee); //route to get a single user by their user id
 
 router.get('/:_id', _auth.userAuth, userController.getUser); //route to update a single user by their user id
 
