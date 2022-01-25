@@ -36,7 +36,7 @@ router.get('/employees', _auth.userAuth, empController.allEmployee); //route to 
 
 router.get('/employees/:_id', _auth.userAuth, empController.getEmployee); //route to update a single user by their user id
 
-router.put('/:_id', userController.updateUser); //route to delete a single user by their user id
+router.put('/employees/:_id', _auth.userAuth, _user2.newEmployeeValidator, empController.updateEmployee); //route to delete a single user by their user id
 
 router["delete"]('/:_id', userController.deleteUser);
 var _default = router;

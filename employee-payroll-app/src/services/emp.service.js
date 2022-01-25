@@ -30,3 +30,20 @@ export const getEmployee = (id) => {
       .catch((error) => reject(error));
   });
 };
+
+//update single user
+export const updateEmployee = (_id, body) => {
+  return new Promise((resolve, reject) => {
+    User.findByIdAndUpdate(
+      {
+        _id
+      },
+      body,
+      {
+        new: true
+      }
+    )
+      .then((data) => resolve(data))
+      .catch((error) => reject(error));
+  });
+};

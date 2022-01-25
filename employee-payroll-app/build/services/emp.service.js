@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.newEmployee = exports.getEmployee = exports.allEmployee = void 0;
+exports.updateEmployee = exports.newEmployee = exports.getEmployee = exports.allEmployee = void 0;
 
 var _emp = _interopRequireDefault(require("../models/emp.model"));
 
@@ -44,6 +44,23 @@ var getEmployee = function getEmployee(id) {
       return reject(error);
     });
   });
-};
+}; //update single user
+
 
 exports.getEmployee = getEmployee;
+
+var updateEmployee = function updateEmployee(_id, body) {
+  return new Promise(function (resolve, reject) {
+    _emp["default"].findByIdAndUpdate({
+      _id: _id
+    }, body, {
+      "new": true
+    }).then(function (data) {
+      return resolve(data);
+    })["catch"](function (error) {
+      return reject(error);
+    });
+  });
+};
+
+exports.updateEmployee = updateEmployee;

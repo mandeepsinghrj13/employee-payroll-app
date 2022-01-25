@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.newEmployee = exports.getEmployee = exports.allEmployee = void 0;
+exports.updateEmployee = exports.newEmployee = exports.getEmployee = exports.allEmployee = void 0;
 
 var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
@@ -66,6 +66,8 @@ var allEmployee = function allEmployee(req, res, next) {
   try {
     UserService.allEmployee(function (error, data) {
       if (data) {
+        _logger["default"].info('Geting All Employee Successfully');
+
         res.status(_httpStatusCodes["default"].OK).json({
           code: _httpStatusCodes["default"].OK,
           message: 'Geting All Employee Successfully',
@@ -90,12 +92,16 @@ exports.allEmployee = allEmployee;
 var getEmployee = function getEmployee(req, res, next) {
   try {
     UserService.getEmployee(req.params._id).then(function (data) {
+      _logger["default"].info('Employee fetched successfully');
+
       res.status(_httpStatusCodes["default"].OK).json({
         code: _httpStatusCodes["default"].OK,
         message: 'Employee fetched successfully',
         data: data
       });
     })["catch"](function () {
+      _logger["default"].error(' Id Not Found');
+
       res.status(_httpStatusCodes["default"].NOT_FOUND).json({
         code: _httpStatusCodes["default"].NOT_FOUND,
         message: ' Id Not Found'
@@ -105,5 +111,37 @@ var getEmployee = function getEmployee(req, res, next) {
     next(error);
   }
 };
+/**
+ * Controller to update a Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
 
 exports.getEmployee = getEmployee;
+
+var updateEmployee = function updateEmployee(req, res, next) {
+  try {
+    UserService.updateEmployee(req.params._id, req.body).then(function (data) {
+      _logger["default"].info('Employee updated successfully');
+
+      res.status(_httpStatusCodes["default"].OK).json({
+        code: _httpStatusCodes["default"].OK,
+        message: 'Employee updated successfully',
+        data: data
+      });
+    })["catch"](function () {
+      _logger["default"].error(' Id Not Found');
+
+      return res.status(_httpStatusCodes["default"].NOT_FOUND).json({
+        code: _httpStatusCodes["default"].NOT_FOUND,
+        message: ' Id Not Found'
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateEmployee = updateEmployee;

@@ -43,6 +43,7 @@ export const allEmployee = (req, res, next) => {
   try {
     UserService.allEmployee((error, data) => {
       if (data) {
+        logger.info('Geting All Employee Successfully');
         res.status(HttpStatus.OK).json({
           code: HttpStatus.OK,
           message: 'Geting All Employee Successfully',
@@ -65,6 +66,7 @@ export const getEmployee = (req, res, next) => {
   try {
     UserService.getEmployee(req.params._id)
       .then((data) => {
+        logger.info('Employee fetched successfully');
         res.status(HttpStatus.OK).json({
           code: HttpStatus.OK,
           message: 'Employee fetched successfully',
@@ -72,7 +74,37 @@ export const getEmployee = (req, res, next) => {
         });
       })
       .catch(() => {
+        logger.error(' Id Not Found');
         res.status(HttpStatus.NOT_FOUND).json({
+          code: HttpStatus.NOT_FOUND,
+          message: ' Id Not Found'
+        });
+      });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Controller to update a Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const updateEmployee = (req, res, next) => {
+  try {
+    UserService.updateEmployee(req.params._id, req.body)
+      .then((data) => {
+        logger.info('Employee updated successfully');
+        res.status(HttpStatus.OK).json({
+          code: HttpStatus.OK,
+          message: 'Employee updated successfully',
+          data: data
+        });
+      })
+      .catch(() => {
+        logger.error(' Id Not Found');
+        return res.status(HttpStatus.NOT_FOUND).json({
           code: HttpStatus.NOT_FOUND,
           message: ' Id Not Found'
         });
