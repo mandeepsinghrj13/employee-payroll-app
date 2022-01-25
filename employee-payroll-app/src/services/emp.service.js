@@ -21,3 +21,12 @@ export const allEmployee = (callback) => {
     }
   });
 };
+
+//get single Employee by Id
+export const getEmployee = (id) => {
+  return new Promise((resolve, reject) => {
+    User.findById(id)
+      .then((data) => resolve(data))
+      .catch((error) => reject(error));
+  });
+};

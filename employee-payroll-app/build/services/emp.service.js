@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.newEmployee = exports.allEmployee = void 0;
+exports.newEmployee = exports.getEmployee = exports.allEmployee = void 0;
 
 var _emp = _interopRequireDefault(require("../models/emp.model"));
 
@@ -31,6 +31,19 @@ var allEmployee = function allEmployee(callback) {
       return callback(error, null);
     }
   });
-};
+}; //get single Employee by Id
+
 
 exports.allEmployee = allEmployee;
+
+var getEmployee = function getEmployee(id) {
+  return new Promise(function (resolve, reject) {
+    _emp["default"].findById(id).then(function (data) {
+      return resolve(data);
+    })["catch"](function (error) {
+      return reject(error);
+    });
+  });
+};
+
+exports.getEmployee = getEmployee;

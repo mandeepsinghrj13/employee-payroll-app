@@ -7,13 +7,15 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.newEmployee = exports.allEmployee = void 0;
+exports.newEmployee = exports.getEmployee = exports.allEmployee = void 0;
 
 var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
 var UserService = _interopRequireWildcard(require("../services/emp.service"));
 
 var _logger = _interopRequireDefault(require("../config/logger"));
+
+var _promises = require("bcrypt/promises");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -75,5 +77,33 @@ var allEmployee = function allEmployee(req, res, next) {
     next(error);
   }
 };
+/**
+ * Controller to get a single Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
 
 exports.allEmployee = allEmployee;
+
+var getEmployee = function getEmployee(req, res, next) {
+  try {
+    UserService.getEmployee(req.params._id).then(function (data) {
+      res.status(_httpStatusCodes["default"].OK).json({
+        code: _httpStatusCodes["default"].OK,
+        message: 'Employee fetched successfully',
+        data: data
+      });
+    })["catch"](function () {
+      res.status(_httpStatusCodes["default"].NOT_FOUND).json({
+        code: _httpStatusCodes["default"].NOT_FOUND,
+        message: ' Id Not Found'
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getEmployee = getEmployee;

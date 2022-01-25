@@ -1,6 +1,7 @@
 import HttpStatus from 'http-status-codes';
 import * as UserService from '../services/emp.service';
 import logger from '../config/logger';
+import { reject } from 'bcrypt/promises';
 
 /**
  * Controller to create a newEmployee
@@ -49,6 +50,33 @@ export const allEmployee = (req, res, next) => {
         });
       }
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Controller to get a single Employee
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const getEmployee = (req, res, next) => {
+  try {
+    UserService.getEmployee(req.params._id)
+      .then((data) => {
+        res.status(HttpStatus.OK).json({
+          code: HttpStatus.OK,
+          message: 'Employee fetched successfully',
+          data: data
+        });
+      })
+      .catch(() => {
+        res.status(HttpStatus.NOT_FOUND).json({
+          code: HttpStatus.NOT_FOUND,
+          message: ' Id Not Found'
+        });
+      });
   } catch (error) {
     next(error);
   }
