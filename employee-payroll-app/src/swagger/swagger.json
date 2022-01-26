@@ -43,6 +43,33 @@
                     }
                 }
             }
+        },
+
+        "/login": {
+            "post": {
+                "tags": ["Login"],
+                "description": "Login user",
+                "parameters": [
+                    {
+                        "name": "Login",
+                        "in": "body",
+                        "description": "User that we want to login",
+                        "schema": {
+                            "$ref": "#/definitions/loginUser"
+                        }
+                    }
+                ],
+
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -65,6 +92,21 @@
             "example": {
                 "firstName":"example",
                 "lastName":"example",
+                "email":"example@gmail.com",
+                "password": "Password@123"
+            }
+        },
+        "loginUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "example": {
                 "email":"example@gmail.com",
                 "password": "Password@123"
             }
