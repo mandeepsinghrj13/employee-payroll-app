@@ -191,6 +191,56 @@
                         "description": "invalid token/Internal server error"
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "update employee"
+                ],
+                "description": "update a employee by ID for perticuler person id !!",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "description": "Id of employee you want to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "update employee",
+                        "description": "employee body",
+                        "schema": {
+                            "$ref": "#/definitions/employee"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee updated successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "404": {
+                        "description": "Id Not Found"
+                    },
+                    "500": {
+                        "description": "invalid token/Internal server error"
+                    }
+                }
             }
         }
     },
@@ -256,8 +306,8 @@
                 }
             },
             "example": {
-                "firstName": "firstName",
-                "lastName": "lastName",
+                "firstName": "firstname",
+                "lastName": "lastname",
                 "email": "example@gmail.com",
                 "gender": "M or F",
                 "salary": 2000,
