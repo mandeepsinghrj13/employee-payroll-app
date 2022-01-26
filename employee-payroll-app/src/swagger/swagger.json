@@ -63,10 +63,57 @@
                 "produces": ["application/json"],
                 "responses": {
                     "200": {
-                        "description": "ok"
+                        "description": "login successfully"
                     },
                     "404": {
-                        "description": "Not Found"
+                        "description": "not register/Not Found"
+                    },
+                    "401": {
+                        "description": "wrong password"
+                    }
+                }
+            }
+        },
+        "/employees": {
+            "post": {
+                "tags": [
+                    "create new employee"
+                ],
+                "description": "create new employee",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "create new employee",
+                        "in": "body",
+                        "description": "employee body",
+                        "schema": {
+                            "$ref": "#/definitions/employee"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Employee Added successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "409": {
+                        "description": "Employee Email Already Exist"
+                    },
+                    "500": {
+                        "description": "invalid token/Internal server error"
                     }
                 }
             }
@@ -109,6 +156,38 @@
             "example": {
                 "email":"example@gmail.com",
                 "password": "Password@123"
+            }
+        },
+        "employee": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "salary": {
+                    "type": "number"
+                },
+                "department": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "firstName": "firstName",
+                "lastName": "lastName",
+                "email": "example@gmail.com",
+                "gender": "M or F",
+                "salary": 2000,
+                "department": "Write a department here....."
+                
             }
         }
     }
