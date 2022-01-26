@@ -116,6 +116,37 @@
                         "description": "invalid token/Internal server error"
                     }
                 }
+            },
+            "get": {
+                "tags": [
+                    "Get All Employee "
+                ],
+                "description": "Get all employee !!",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Geting All Employee Successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "500": {
+                        "description": "invalid token/Internal server error"
+                    }
+                }
             }
         }
     },
