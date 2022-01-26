@@ -241,6 +241,48 @@
                         "description": "invalid token/Internal server error"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Delete employee"
+                ],
+                "description": "Delete a employee by ID for perticuler person id !!",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "description": "Id of employee you want to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee deleted successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "404": {
+                        "description": "Id Not Found"
+                    },
+                    "500": {
+                        "description": "invalid token/Internal server error"
+                    }
+                }
             }
         }
     },
