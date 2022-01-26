@@ -148,6 +148,50 @@
                     }
                 }
             }
+        },
+        "/employees/{_id}": {
+            "get": {
+                "tags": [
+                    "Get a employee"
+                ],
+                "description": "Get a employee by ID for perticuler person id",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "Id of employee you want to fetch",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee fetched successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "404": {
+                        "description": "Id Not Found"
+                    },
+                    "500": {
+                        "description": "invalid token/Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
