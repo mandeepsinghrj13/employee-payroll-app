@@ -171,4 +171,41 @@ describe('Employee APIs Test', () => {
         });
     });
   });
+
+  describe('Get All Employee Api', () => {
+    it('GivenGetAllEmployeeDetails_WhenNotProper_shouldReturninTokenRequired', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/employees')
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('message').eql('Authorization token is required');
+          done();
+        });
+    });
+    it('GivenGetAllEmployeeDetails_WhenProper_shouldReturnSuccess', (done) => {
+      const token = employeeDB.login.validToken;
+      chai
+        .request(app)
+        .get('/api/v1/employees')
+        .set({ authorization: token })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message').eql('Geting All Employee Successfully');
+          done();
+        });
+    });
+    it('GivenGetAllEmployeeDetails_WhenNotProper_shouldReturninvalidToken', (done) => {
+      const token = employeeDB.login.invalidToken;
+      chai
+        .request(app)
+        .get('/api/v1/employees')
+        .set({ authorization: token })
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.have.property('message').eql('invalid token');
+          done();
+        });
+    });
+  });
 });
