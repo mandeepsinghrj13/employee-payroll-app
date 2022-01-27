@@ -11,8 +11,8 @@ var _joi = _interopRequireDefault(require("@hapi/joi"));
 
 var registerValidator = function registerValidator(req, res, next) {
   var schema = _joi["default"].object({
-    firstName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[a-z]{1,}$')),
-    lastName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[a-z]{1,}$')),
+    firstName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[A-Za-z]{1,}$')),
+    lastName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[A-Za-z]{1,}$')),
     email: _joi["default"].string().pattern(new RegExp('^[a-zA-z]{2}([+-_ .]*[a-zA-Z0-9]+)*[@][a-zA-z0-9]+(.[a-z]{2,3})*$')).required(),
     password: _joi["default"].string().pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})')).required()
   });
@@ -53,8 +53,8 @@ exports.loginValidator = loginValidator;
 
 var newEmployeeValidator = function newEmployeeValidator(req, res, next) {
   var schema = _joi["default"].object({
-    firstName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[a-z]{1,}$')),
-    lastName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[a-z]{1,}$')),
+    firstName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[A-Za-z]{1,}$')),
+    lastName: _joi["default"].string().min(2).required().pattern(new RegExp('^[A-Za-z]{1}[A-Za-z]{1,}$')),
     email: _joi["default"].string().pattern(new RegExp('^[a-zA-z]{2}([+-_ .]*[a-zA-Z0-9]+)*[@][a-zA-z0-9]+(.[a-z]{2,3})*$')).required(),
     gender: _joi["default"].string().min(1).required().pattern(new RegExp('^[A-Za-z]{1}$')),
     salary: _joi["default"].number().integer().required(),
