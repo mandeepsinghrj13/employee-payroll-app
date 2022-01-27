@@ -1,0 +1,7 @@
+{
+    "login": {
+        "validToken": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUb2tlbiI6eyJpZCI6IjYxZjAwNWEyYzlkMDQyM2E4OGViMjE1NCIsImZpcnN0TmFtZSI6Ik1hbmRlZXAiLCJsYXN0TmFtZSI6InNpbmdoIiwiZW1haWwiOiJtYW5kZWVwc2luZ2gxOTk2QGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDMyNTU5OTN9.ppFF54H7Sm_17cKbchT3XsstS5Zjym6onu2UUIhhtlc",
+        "invalidToken": "bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhRm9yVG9rZW4iOnsiZW1haWwiOiJzaW5naC5tci4xOTk2QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2NDE5MjA1Mzd9.tmGMYfSdOQDHbt5sQJ02pfmf82c_xSH968FYPL0Uu0s"
+        }
+
+}
