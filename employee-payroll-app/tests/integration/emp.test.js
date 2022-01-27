@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
+import { uuid } from 'uuidv4';
 import app from '../../src/index';
 import employeeDB from './emp.test.json';
 chai.should();
@@ -353,6 +354,43 @@ describe('Employee APIs Test', () => {
         .send(updateEmployee)
         .end((err, res) => {
           res.should.have.status(500);
+          done();
+        });
+    });
+  });
+  describe('Delete Employee Api', () => {
+    it('GivenDeleteEmployeeDetails_WhenNotProper_shouldReturninTokenRequired', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/employees/61f131aab710b22b48dc8874')
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('message').eql('Authorization token is required');
+          done();
+        });
+    });
+    it('GivenDeleteEmployeeDetails_WhenProper_shouldReturnSuccess', (done) => {
+      const token = employeeDB.login.validToken;
+      const id = uuid();
+      chai
+        .request(app)
+        .delete(`/api/v1/employees/${id}`)
+        .set({ authorization: token })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message').eql('Employee deleted successfully');
+          done();
+        });
+    });
+    it('GivenDeleteEmployeeByIdDetails_WhenNotProper_shouldReturn_Id_Not_Found', (done) => {
+      const token = employeeDB.login.validToken;
+      chai
+        .request(app)
+        .delete('/api/v1/employees/61f131aab710b22b48dc8800')
+        .set({ authorization: token })
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('message').eql(' Id Not Found');
           done();
         });
     });
