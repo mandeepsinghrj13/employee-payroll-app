@@ -256,4 +256,105 @@ describe('Employee APIs Test', () => {
         });
     });
   });
+  describe('Update Employee Api', () => {
+    it('GivenUpdateEmployeeDetails_WhenNotProper_shouldReturninTokenRequired', (done) => {
+      const updateEmployee = {
+        firstName: 'deep',
+        lastName: 'singh',
+        email: 'mandeepsingh1996@gmail.com',
+        gender: 'M',
+        salary: 400000,
+        department: 'frontend'
+      };
+      chai
+        .request(app)
+        .put('/api/v1/employees/61f131aab710b22b48dc8874')
+        .send(updateEmployee)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('message').eql('Authorization token is required');
+          done();
+        });
+    });
+    it('GivenUpdateEmployeeDetails_WhenProper_shouldReturnSuccess', (done) => {
+      const token = employeeDB.login.validToken;
+      const updateEmployee = {
+        firstName: 'Mandeep',
+        lastName: 'singh',
+        email: 'mandeepsingh1996@gmail.com',
+        gender: 'M',
+        salary: 4000,
+        department: 'backend'
+      };
+      chai
+        .request(app)
+        .put('/api/v1/employees/61f131aab710b22b48dc8874')
+        .set({ authorization: token })
+        .send(updateEmployee)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message').eql('Employee updated successfully');
+          done();
+        });
+    });
+    it('GivenUpdateEmployeeDetails_WhenNotProper_shouldReturn_firstName_Required"', (done) => {
+      const token = employeeDB.login.validToken;
+      const updateEmployee = {
+        lastName: 'singh',
+        email: 'mandeepsingh1996@gmail.com',
+        gender: 'M',
+        salary: 24000,
+        department: 'backend'
+      };
+      chai
+        .request(app)
+        .put('/api/v1/employees/61f131aab710b22b48dc8874')
+        .set({ authorization: token })
+        .send(updateEmployee)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+    });
+    it('GivenUpdateEmployeeDetails_WhenNotProper_shouldReturn_firstName_length_must_be_at_least_2_characters"', (done) => {
+      const token = employeeDB.login.validToken;
+      const updateEmployee = {
+        firstName: 'M',
+        lastName: 'singh',
+        email: 'mandeepsingh1996@gmail.com',
+        gender: 'M',
+        salary: 24000,
+        department: 'backend'
+      };
+      chai
+        .request(app)
+        .put('/api/v1/employees/61f131aab710b22b48dc8874')
+        .set({ authorization: token })
+        .send(updateEmployee)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+    });
+    it('GivenUpdateEmployeeDetails_WhenNotProper_shouldReturn_Gender_fails_to_match_the_Required"', (done) => {
+      const token = employeeDB.login.validToken;
+      const updateEmployee = {
+        firstName: 'Mandeep',
+        lastName: 'singh',
+        email: 'mandeepsingh1996@gmailcom',
+        gender: 'Male',
+        salary: 24000,
+        department: 'backend'
+      };
+      chai
+        .request(app)
+        .put('/api/v1/employees/61f131aab710b22b48dc8874')
+        .set({ authorization: token })
+        .send(updateEmployee)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+    });
+  });
 });
