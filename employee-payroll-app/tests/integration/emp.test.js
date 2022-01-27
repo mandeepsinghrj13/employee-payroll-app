@@ -208,4 +208,52 @@ describe('Employee APIs Test', () => {
         });
     });
   });
+  describe('Get Employee By Id Api', () => {
+    it('GivenGetEmployeeByIdDetails_WhenNotProper_shouldReturninTokenRequired', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/employees/61ef9d9e5d571f1d64f43008')
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('message').eql('Authorization token is required');
+          done();
+        });
+    });
+    it('GivenGetEmployeeByIdDetails_WhenProper_shouldReturnSuccess', (done) => {
+      const token = employeeDB.login.validToken;
+      chai
+        .request(app)
+        .get('/api/v1/employees/61ef9d9e5d571f1d64f43008')
+        .set({ authorization: token })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message').eql('Employee fetched successfully');
+          done();
+        });
+    });
+    it('GivenGetEmployeeByIdDetails_WhenNotProper_shouldReturninvalidToken', (done) => {
+      const token = employeeDB.login.invalidToken;
+      chai
+        .request(app)
+        .get('/api/v1/employees/61ef9d9e5d571f1d64f43008')
+        .set({ authorization: token })
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.have.property('message').eql('invalid token');
+          done();
+        });
+    });
+    it('GivenGetEmployeeByIdDetails_WhenProper_shouldReturn_Id_Not_Found', (done) => {
+      const token = employeeDB.login.validToken;
+      chai
+        .request(app)
+        .get('/api/v1/employees/61ef9d9e5d571f1d64f43000')
+        .set({ authorization: token })
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('message').eql(' Id Not Found');
+          done();
+        });
+    });
+  });
 });
