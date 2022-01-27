@@ -91,28 +91,57 @@ var allEmployee = function allEmployee(req, res, next) {
 
 exports.allEmployee = allEmployee;
 
-var getEmployee = function getEmployee(req, res, next) {
-  try {
-    UserService.getEmployee(req.params._id).then(function (data) {
-      _logger["default"].info('Employee fetched successfully');
+var getEmployee = /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return UserService.getEmployee(req.params._id);
 
-      res.status(_httpStatusCodes["default"].OK).json({
-        code: _httpStatusCodes["default"].OK,
-        message: 'Employee fetched successfully',
-        data: data
-      });
-    })["catch"](function () {
-      _logger["default"].error(' Id Not Found');
+          case 3:
+            data = _context.sent;
 
-      res.status(_httpStatusCodes["default"].NOT_FOUND).json({
-        code: _httpStatusCodes["default"].NOT_FOUND,
-        message: ' Id Not Found'
-      });
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+            if (data == null) {
+              _logger["default"].error(' Id Not Found');
+
+              res.status(_httpStatusCodes["default"].NOT_FOUND).json({
+                code: _httpStatusCodes["default"].NOT_FOUND,
+                message: ' Id Not Found'
+              });
+            } else {
+              _logger["default"].info('Employee fetched successfully');
+
+              res.status(_httpStatusCodes["default"].OK).json({
+                code: _httpStatusCodes["default"].OK,
+                message: 'Employee fetched successfully',
+                data: data
+              });
+            }
+
+            _context.next = 10;
+            break;
+
+          case 7:
+            _context.prev = 7;
+            _context.t0 = _context["catch"](0);
+            next(_context.t0);
+
+          case 10:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 7]]);
+  }));
+
+  return function getEmployee(_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}();
 /**
  * Controller to update a Employee
  * @param  {object} req - request object
@@ -156,27 +185,27 @@ var updateEmployee = function updateEmployee(req, res, next) {
 exports.updateEmployee = updateEmployee;
 
 var deleteEmployee = /*#__PURE__*/function () {
-  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res, next) {
     var data;
-    return _regenerator["default"].wrap(function _callee$(_context) {
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
-            _context.prev = 0;
-            _context.next = 3;
+            _context2.prev = 0;
+            _context2.next = 3;
             return UserService.deleteEmployee(req.params._id);
 
           case 3:
-            data = _context.sent;
+            data = _context2.sent;
 
             if (!(data == null)) {
-              _context.next = 7;
+              _context2.next = 7;
               break;
             }
 
             _logger["default"].error(' Id Not Found');
 
-            return _context.abrupt("return", res.status(_httpStatusCodes["default"].NOT_FOUND).json({
+            return _context2.abrupt("return", res.status(_httpStatusCodes["default"].NOT_FOUND).json({
               code: _httpStatusCodes["default"].NOT_FOUND,
               message: ' Id Not Found'
             }));
@@ -189,24 +218,24 @@ var deleteEmployee = /*#__PURE__*/function () {
               message: 'Employee deleted successfully',
               data: data
             });
-            _context.next = 14;
+            _context2.next = 14;
             break;
 
           case 11:
-            _context.prev = 11;
-            _context.t0 = _context["catch"](0);
-            next(_context.t0);
+            _context2.prev = 11;
+            _context2.t0 = _context2["catch"](0);
+            next(_context2.t0);
 
           case 14:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, null, [[0, 11]]);
+    }, _callee2, null, [[0, 11]]);
   }));
 
-  return function deleteEmployee(_x, _x2, _x3) {
-    return _ref.apply(this, arguments);
+  return function deleteEmployee(_x4, _x5, _x6) {
+    return _ref2.apply(this, arguments);
   };
 }();
 

@@ -61,24 +61,23 @@ export const allEmployee = (req, res, next) => {
  * @param {object} res - response object
  * @param {Function} next
  */
-export const getEmployee = (req, res, next) => {
+export const getEmployee = async (req, res, next) => {
   try {
-    UserService.getEmployee(req.params._id)
-      .then((data) => {
-        logger.info('Employee fetched successfully');
-        res.status(HttpStatus.OK).json({
-          code: HttpStatus.OK,
-          message: 'Employee fetched successfully',
-          data: data
-        });
-      })
-      .catch(() => {
-        logger.error(' Id Not Found');
-        res.status(HttpStatus.NOT_FOUND).json({
-          code: HttpStatus.NOT_FOUND,
-          message: ' Id Not Found'
-        });
+    const data = await UserService.getEmployee(req.params._id);
+    if (data == null) {
+      logger.error(' Id Not Found');
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: ' Id Not Found'
       });
+    } else {
+      logger.info('Employee fetched successfully');
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Employee fetched successfully',
+        data: data
+      });
+    }
   } catch (error) {
     next(error);
   }
