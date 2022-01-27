@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUser = exports.register = exports.login = exports.getUser = exports.getAllUsers = exports.deleteUser = void 0;
+exports.register = exports.login = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -88,6 +88,13 @@ var register = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+/**
+ * Controller to login user
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
 
 exports.register = register;
 
@@ -153,195 +160,5 @@ var login = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
-/**
- * Controller to get all users available
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-
 
 exports.login = login;
-
-var getAllUsers = /*#__PURE__*/function () {
-  var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res, next) {
-    var data;
-    return _regenerator["default"].wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.prev = 0;
-            _context3.next = 3;
-            return UserService.getAllUsers();
-
-          case 3:
-            data = _context3.sent;
-            res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
-              data: data,
-              message: 'All users fetched successfully'
-            });
-            _context3.next = 10;
-            break;
-
-          case 7:
-            _context3.prev = 7;
-            _context3.t0 = _context3["catch"](0);
-            next(_context3.t0);
-
-          case 10:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3, null, [[0, 7]]);
-  }));
-
-  return function getAllUsers(_x7, _x8, _x9) {
-    return _ref3.apply(this, arguments);
-  };
-}();
-/**
- * Controller to get a single user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-
-
-exports.getAllUsers = getAllUsers;
-
-var getUser = /*#__PURE__*/function () {
-  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
-    var data;
-    return _regenerator["default"].wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.prev = 0;
-            _context4.next = 3;
-            return UserService.getUser(req.params._id);
-
-          case 3:
-            data = _context4.sent;
-            res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
-              data: data,
-              message: 'User fetched successfully'
-            });
-            _context4.next = 10;
-            break;
-
-          case 7:
-            _context4.prev = 7;
-            _context4.t0 = _context4["catch"](0);
-            next(_context4.t0);
-
-          case 10:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4, null, [[0, 7]]);
-  }));
-
-  return function getUser(_x10, _x11, _x12) {
-    return _ref4.apply(this, arguments);
-  };
-}();
-/**
- * Controller to update a user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-
-
-exports.getUser = getUser;
-
-var updateUser = /*#__PURE__*/function () {
-  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res, next) {
-    var data;
-    return _regenerator["default"].wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.prev = 0;
-            _context5.next = 3;
-            return UserService.updateUser(req.params._id, req.body);
-
-          case 3:
-            data = _context5.sent;
-            res.status(_httpStatusCodes["default"].ACCEPTED).json({
-              code: _httpStatusCodes["default"].ACCEPTED,
-              data: data,
-              message: 'User updated successfully'
-            });
-            _context5.next = 10;
-            break;
-
-          case 7:
-            _context5.prev = 7;
-            _context5.t0 = _context5["catch"](0);
-            next(_context5.t0);
-
-          case 10:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5, null, [[0, 7]]);
-  }));
-
-  return function updateUser(_x13, _x14, _x15) {
-    return _ref5.apply(this, arguments);
-  };
-}();
-/**
- * Controller to delete a user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-
-
-exports.updateUser = updateUser;
-
-var deleteUser = /*#__PURE__*/function () {
-  var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(req, res, next) {
-    return _regenerator["default"].wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _context6.prev = 0;
-            _context6.next = 3;
-            return UserService.deleteUser(req.params._id);
-
-          case 3:
-            res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
-              data: [],
-              message: 'User deleted successfully'
-            });
-            _context6.next = 9;
-            break;
-
-          case 6:
-            _context6.prev = 6;
-            _context6.t0 = _context6["catch"](0);
-            next(_context6.t0);
-
-          case 9:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6, null, [[0, 6]]);
-  }));
-
-  return function deleteUser(_x16, _x17, _x18) {
-    return _ref6.apply(this, arguments);
-  };
-}();
-
-exports.deleteUser = deleteUser;

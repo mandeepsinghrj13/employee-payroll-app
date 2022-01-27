@@ -11,6 +11,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _user = _interopRequireDefault(require("./user.route"));
 
+var _emp = _interopRequireDefault(require("./emp.route"));
+
 var router = _express["default"].Router();
 
 /**
@@ -23,6 +25,7 @@ var routes = function routes() {
     res.json('Welcome');
   });
   router.use('/users', _user["default"]);
+  router.use('/employees', _emp["default"]);
   return router;
 };
 
