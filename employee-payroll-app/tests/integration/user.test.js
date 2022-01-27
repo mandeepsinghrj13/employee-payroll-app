@@ -113,4 +113,80 @@ describe('User APIs Test', () => {
         });
     });
   });
+
+  describe('Login Api', () => {
+    it('GivenLoginDetails_WhenProper_shouldReturnSuccess', (done) => {
+      const login = {
+        email: 'mandeepsingh1996@gmail.com',
+        password: 'Password@123'
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users/login')
+        .send(login)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message').eql('login successfully');
+          done();
+        });
+    });
+    it('GivenLoginDetails_WhenNotProper_shouldReturn_Wrong_Password', (done) => {
+      const login = {
+        email: 'mandeepsingh1996@gmail.com',
+        password: 'Password@12'
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users/login')
+        .send(login)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('message').eql('wrong password');
+          done();
+        });
+    });
+    it('GivenLoginDetails_WhenNotProper_shouldReturn_password_not_allowed_tobe_empty', (done) => {
+      const login = {
+        email: 'mandeepsingh1996@gmail.com',
+        password: ''
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users/login')
+        .send(login)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+    });
+    it('GivenLoginDetails_WhenNotProper_shouldReturn_Email_Not_Register', (done) => {
+      const login = {
+        email: 'mandeepsingh19961@gmail.com',
+        password: 'Password@123'
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users/login')
+        .send(login)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('message').eql('not register');
+          done();
+        });
+    });
+    it('GivenLoginDetails_WhenNotProper_shouldReturn_Email_fails_to_match_the_Required"', (done) => {
+      const login = {
+        email: 'mandeepsingh1996gmail.com',
+        password: 'Password@123'
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users/login')
+        .send(login)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+    });
+  });
 });
